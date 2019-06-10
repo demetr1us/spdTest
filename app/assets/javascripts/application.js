@@ -12,4 +12,5 @@
 //
 //= require rails-ujs
 //= require turbolinks
+//= require jquery-3.4.1.min
 //= require_tree .

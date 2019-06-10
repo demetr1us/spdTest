@@ -1,17 +1,17 @@
 class HomeController < ApplicationController
-  require_relative '../../lib/csv_processor.rb'
   def index
   end
+
   def upload
     uploaded_io = params[:csv]
-    File.open(Rails.root.join('public', 'uploads', 'csv.csv'), 'wb') do |file|
+    mode = 'wb'
+    if params['submit'] == 'Add to existing'
+      mode = 'ab'
+    end
+    File.open(Rails.root.join('public', 'uploads', 'csv.csv'), mode) do |file|
       file.write(uploaded_io.read)
     end
-    @data =  CsvProcessor.process(Rails.root.join('public', 'uploads', 'csv.csv'))
-    @labels = []
-    @data['rows'].keys.each {|date| @labels  = @labels + [date]*@data['rows'][date].size }
-
-    @data['rows'].values
+    @data = CsvProcessor.new(Rails.root.join('public', 'uploads', 'csv.csv'))
 
   end
 end

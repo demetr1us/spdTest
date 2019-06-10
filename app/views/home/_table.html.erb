@@ -1,0 +1,25 @@
+<script type="text/javascript">
+    $(document).ready( function () {
+        $('#csv_table').DataTable();
+    } );
+</script>
+<table id="csv_table" class="display">
+  <thead>
+  <tr>
+    <th>#</th>
+    <th>Date</th>
+    <th>Card Type</th>
+    <th>Sales Count</th>
+  </tr>
+  </thead>
+  <tbody>
+  <% @data.raw_data.each_with_index  do |row, index| %>
+    <tr>
+      <td><%=(index+1)%></td>
+      <td><%=row['date']%></td>
+      <td><%=row['card']%></td>
+      <td><%=row['sales']%></td>
+    </tr>
+  <%end%>
+  </tbody>
+</table>

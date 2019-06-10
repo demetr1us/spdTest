@@ -1,0 +1,51 @@
+<canvas id="myChart" width="1000" height="600" style="width: 1000px;height: 600px;"></canvas>
+<script type="text/javascript">
+    var ctx = document.getElementById('myChart');
+    var myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: <%= @data.chart_dates.to_json.html_safe %>,
+            datasets: [{
+                label: '# of Sales',
+                data: <%= @data.chart_data %>,
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 206, 86, 0.2)'
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)',
+                    'rgba(255, 159, 64, 1)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            },
+            tooltips: {
+                callbacks: {
+                    title: function() {
+                        return "";
+                    },
+                    label: function(item, data) {
+                        console.log(item);
+                        labels = <%=@data.chart_labels.to_json.html_safe %>;
+                        var datasetLabel = data.datasets[item.datasetIndex].label || "";
+                        var dataPoint = item.yLabel;
+                        return labels[item.index] + ' '+dataPoint;
+                    }
+                }
+            }
+        }
+    });
+</script>

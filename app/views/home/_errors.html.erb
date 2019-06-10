@@ -1,0 +1,27 @@
+<% if @data.error_rows.count > 0 %>
+  <div id="errors" style="border:solid 1px #333333">
+    <h3>Invalid rows in file: <%=@data.error_rows.count%></h3>
+    <table id="csv_error">
+      <thead>
+        <th>#</th>
+        <th>line number</th>
+        <th>Row contents</th>
+      </thead>
+      <tbody style="color: #FF0000">
+        <% @data.error_rows.each_with_index do |row, index| %>
+          <tr>
+            <td><%=(index+1)%></td>
+            <td><%=row[:idx]%></td>
+            <td><%=row[:row][0..50] %></td>
+          </tr>
+        <% end%>
+      </tbody>
+    </table>
+
+  </div>
+    <script type="text/javascript">
+        $(document).ready( function () {
+            $('#csv_error').DataTable();
+        } );
+    </script>
+<% end%>
